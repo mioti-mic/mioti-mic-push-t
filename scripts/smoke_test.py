@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from pusht.env_check import run_smoke_test, to_dict
+from env_check import run_smoke_test, to_dict
 
 
 def main() -> int:
