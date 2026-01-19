@@ -1,0 +1,14 @@
+gymnasium>=1.2,<1.3
+gym-pusht==0.1.6
+pymunk<7
+pygame>=2.6
+
+numpy>=1.26
+scikit-image
+shapely
+opencv-python-headless
+
+datasets>=2.18
+huggingface_hub>=0.20
+
+matplotlib
