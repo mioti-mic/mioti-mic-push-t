@@ -2,6 +2,7 @@ from src.data.rollouts.buffer import RolloutBuffer
 from src.data.rollouts.export_hf import build_steps_features
 import datasets
 import gymnasium as gym
+import gym_pusht
 
 def main():
 
