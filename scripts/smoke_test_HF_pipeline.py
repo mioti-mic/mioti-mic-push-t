@@ -1,5 +1,5 @@
 def main():
-    from src.data.rollouts.buffer import RolloutBufferSteps
+    from src.data.rollouts.buffer import RolloutBuffer
     from src.data.rollouts.export_hf import build_steps_features
     import datasets
     import gymnasium as gym
@@ -7,7 +7,7 @@ def main():
     env = gym.make("gym_pusht/PushT-v0", obs_type="state", render_mode=None)
     obs, info = env.reset(seed=0)
 
-    buf = RolloutBufferSteps(capacity_steps=5, obs_dim=5, act_dim=2)
+    buf = RolloutBuffer(capacity_steps=5, obs_dim=5, act_dim=2)
 
     action = env.action_space.sample()
     next_obs, reward, terminated, truncated, info = env.step(action)

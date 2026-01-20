@@ -55,7 +55,7 @@ class RolloutBuffer:
     ) -> None:
         if self.is_full():
             raise IndexError(
-                f"RolloutBufferSteps lleno: capacity_steps={self.capacity}. "
+                f"RolloutBuffer lleno: capacity_steps={self.capacity}. "
                 "Aumenta capacity o reduce episodes*horizon."
             )
 
