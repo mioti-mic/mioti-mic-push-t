@@ -6,6 +6,7 @@ import subprocess
 from typing import Dict, List, Tuple
 
 import gymnasium as gym
+import gym_pusht
 import numpy as np
 
 from src.data.rollouts.buffer import RolloutBuffer
