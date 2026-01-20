@@ -62,7 +62,7 @@ def build_episodes_features() -> datasets.Features:
 
 def write_json(path: str, obj: Dict[str, Any]) -> None:
     os.makedirs(os.path.dirname(path), exist_ok = True)
-    with open(path, "w", encoding="utf-8") as f:
+    with open(path, "w", encoding = "utf-8") as f:
         json.dump(obj, f, indent = 2, sort_keys = True)
 
 
@@ -139,16 +139,16 @@ def export_save_and_push(
     api = HfApi()
     api.upload_file(
         path_or_fileobj = os.path.join(out_dir, "schema.json"),
-        path_in_repo="schema.json",
+        path_in_repo = "schema.json",
         repo_id = cfg.repo_id,
-        repo_type="dataset",
+        repo_type = "dataset",
         commit_message = f"Add schema.json ({cfg.schema_version})",
     )
     api.upload_file(
         path_or_fileobj = os.path.join(out_dir, "run_metadata.json"),
         path_in_repo = f"runs/{run_id}/run_metadata.json",
         repo_id = cfg.repo_id,
-        repo_type="dataset",
+        repo_type = "dataset",
         commit_message = f"Add run metadata run_id={run_id}",
     )
 

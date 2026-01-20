@@ -91,12 +91,12 @@ def generate_random_rollouts(
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--repo-id", type = str, required = True, help="HF dataset repo, e.g. mioti-mic/mioti-mic-push-t")
-    p.add_argument("--env-id", type = str, default="gym_pusht/PushT-v0")
+    p.add_argument("--repo-id", type = str, required = True, help = "HF dataset repo, e.g. mioti-mic/mioti-mic-push-t")
+    p.add_argument("--env-id", type = str, default = "gym_pusht/PushT-v0")
     p.add_argument("--episodes", type = int, default = 200)
     p.add_argument("--horizon", type = int, default = 200)
     p.add_argument("--master-seed", type = int, default = 0)
-    p.add_argument("--private", action="store_true")
+    p.add_argument("--private", action = "store_true")
     args = p.parse_args()
 
     # PushT config (tu estado actual)
@@ -115,14 +115,14 @@ def main():
     cfg = ExportConfig(
         repo_id = args.repo_id,
         env_id = args.env_id,
-        policy="random",
+        policy = "random",
         horizon = args.horizon,
         master_seed = args.master_seed,
         obs_dim = 5,
         act_dim = 2,
         git_commit = get_git_commit(),
         private = bool(args.private),
-        schema_version="v1",
+        schema_version = "v1",
     )
 
     result = export_save_and_push(steps_dict = steps_dict, episodes_rows = episodes_rows, cfg = cfg)
