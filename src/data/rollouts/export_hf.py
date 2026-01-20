@@ -80,7 +80,7 @@ def export_save_and_push(
       - runs/<run_id>/run_metadata.json
     """
     run_id = str(uuid.uuid4())
-    created_at_utc = datetime(timezone.utc).replace(microsecond = 0).isoformat()
+    created_at_utc = datetime.now(timezone.utc).replace(microsecond = 0).isoformat()
 
     # Datasets
     steps_ds = datasets.Dataset.from_dict(
@@ -89,7 +89,6 @@ def export_save_and_push(
     episodes_ds = datasets.Dataset.from_list(
         episodes_rows, features = build_episodes_features()
     )
-    dd = datasets.DatasetDict({"steps": steps_ds, "episodes": episodes_ds})
 
     # Metadata
     schema_json = {
@@ -120,19 +119,35 @@ def export_save_and_push(
     # Save local
     out_dir = os.path.join(out_root, f"pusht_{cfg.schema_version}_{run_id}")
     os.makedirs(out_dir, exist_ok = True)
-    dd.save_to_disk(os.path.join(out_dir, "dataset"))
+    
+    # Guardar datasets por separado (no en DatasetDict porque tienen schemas diferentes)
+    steps_ds.save_to_disk(os.path.join(out_dir, "steps"))
+    episodes_ds.save_to_disk(os.path.join(out_dir, "episodes"))
+    
     write_json(os.path.join(out_dir, "schema.json"), schema_json)
     write_json(os.path.join(out_dir, "run_metadata.json"), run_metadata)
 
-    # Push dataset
-    dd.push_to_hub(
+    # Push datasets por separado al Hub
+    commit_msg = (
+        f"{cfg.schema_version}: {cfg.policy} rollouts "
+        f"run_id={run_id} episodes={len(episodes_ds)} horizon={cfg.horizon} "
+        f"master_seed={cfg.master_seed}"
+    )
+    
+    # Subir steps dataset
+    steps_ds.push_to_hub(
         cfg.repo_id,
+        config_name="steps",
         private = cfg.private,
-        commit_message=(
-            f"{cfg.schema_version}: {cfg.policy} rollouts "
-            f"run_id={run_id} episodes={len(episodes_ds)} horizon={cfg.horizon} "
-            f"master_seed={cfg.master_seed}"
-        ),
+        commit_message=f"[steps] {commit_msg}",
+    )
+    
+    # Subir episodes dataset
+    episodes_ds.push_to_hub(
+        cfg.repo_id,
+        config_name="episodes",
+        private = cfg.private,
+        commit_message=f"[episodes] {commit_msg}",
     )
 
     # Upload metadata files (extra)
