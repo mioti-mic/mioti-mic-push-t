@@ -6,31 +6,31 @@ import gym_pusht
 
 def main():
 
-    env = gym.make("gym_pusht/PushT-v0", obs_type = "state", render_mode=None)
-    obs, info = env.reset(seed=0)
+    env = gym.make("gym_pusht/PushT-v0", obs_type = "state", render_mode = None)
+    obs, info = env.reset(seed = 0)
 
-    buf = RolloutBuffer(capacity_steps=5, obs_dim=5, act_dim=2)
+    buf = RolloutBuffer(capacity_steps = 5, obs_dim = 5, act_dim = 2)
 
     action = env.action_space.sample()
     next_obs, reward, terminated, truncated, info = env.step(action)
 
     buf.store_step(
-        episode_id=0,
-        t=0,
-        obs_state=obs,
-        action=action,
-        reward=reward,
-        terminated=terminated,
-        truncated=truncated,
-        seed=0,
-        info=info,
+        episode_id = 0,
+        t = 0,
+        obs_state = obs,
+        action = action,
+        reward = reward,
+        terminated = terminated,
+        truncated = truncated,
+        seed = 0,
+        info = info,
     )
 
     steps_dict = buf.to_hf_dict()
 
     ds = datasets.Dataset.from_dict(
         steps_dict,
-        features=build_steps_features(obs_dim=5, act_dim=2),
+        features = build_steps_features(obs_dim=5, act_dim=2),
     )
 
     assert len(ds) == 1

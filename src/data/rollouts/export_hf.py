@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime as _dt
+from datetime import datetime, timezone
 import json
 import os
 import uuid
@@ -80,7 +80,7 @@ def export_save_and_push(
       - runs/<run_id>/run_metadata.json
     """
     run_id = str(uuid.uuid4())
-    created_at_utc = _dt.datetime.utcnow().replace(microsecond = 0).isoformat() + "Z"
+    created_at_utc = datetime(timezone.utc).replace(microsecond = 0).isoformat()
 
     # Datasets
     steps_ds = datasets.Dataset.from_dict(

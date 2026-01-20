@@ -32,13 +32,12 @@ def generate_random_rollouts(
     obs_dim: int = 5,
     act_dim: int = 2,
 ) -> Tuple[Dict, List[Dict]]:
-    # capacity exacta en MVP (si cortas en done puede sobrar algo, pero no pasa nada):
     buf = RolloutBuffer(capacity_steps = num_episodes * horizon, obs_dim = obs_dim, act_dim = act_dim)
 
     episodes_rows: List[Dict] = []
 
     for ep in range(num_episodes):
-        ep_seed = int(master_seed + ep)  # determinista, simple
+        ep_seed = int(master_seed + ep)
 
         env = gym.make(env_id, **env_kwargs)
         obs, info = env.reset(seed = ep_seed)
@@ -100,7 +99,7 @@ def main():
     p.add_argument("--private", action = "store_true")
     args = p.parse_args()
 
-    # PushT config (tu estado actual)
+
     env_kwargs = {"obs_type": "state", "render_mode": None}
 
     steps_dict, episodes_rows = generate_random_rollouts(
