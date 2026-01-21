@@ -2,8 +2,8 @@ gymnasium>=1.2,<1.3
 gym-pusht==0.1.6
 pymunk<7
 pygame>=2.6
+lerobot[pusht]==0.4.2
 
-numpy>=1.26
 scikit-image
 shapely
 opencv-python-headless
