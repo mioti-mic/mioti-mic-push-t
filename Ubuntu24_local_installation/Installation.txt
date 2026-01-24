@@ -1,0 +1,36 @@
+https://huggingface.co/docs/lerobot/installation
+
+
+
+conda create -n MIOTI-LeRobot-SmolVLA python=3.10
+
+conda activate MIOTI-LeRobot-SmolVLA
+
+conda install -y ffmpeg -c conda-forge
+
+
+
+
+git clone https://github.com/huggingface/lerobot.git
+cd lerobot
+
+pip install -e .
+
+
+
+conda install -n MIOTI-LeRobot-SmolVLA ipykernel --update-deps --force-reinstall
+
+conda install -y ipywidgets jupyterlab -c conda-forge 
+
+
+
+
+pip install "transformers>=4.41,<5.0"                 
+
+python -m pip install -U num2words
+
+
+
+conda install -y -c conda-forge ffmpeg
+
+conda install -y -c conda-forge "ffmpeg=7.*"
